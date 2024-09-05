@@ -1,13 +1,14 @@
+version: "3"
 services:
   db:
-    image: postgres
+    image: postgres:latest
     env_file:
       - .env
     restart: unless-stopped
     environment:
-      - POSTGRES_USER=$DB_USER
-      - POSTGRES_PASSWORD=$DB_PASS
-      - POSTGRES_DB=$DB_NAME
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=authdb
     ports:
       - "5432:5432"
     volumes:
@@ -23,12 +24,13 @@ services:
       - .env
     environment:
       - DB_HOST=db
-      - DB_USER=$DB_USER
-      - DB_PASSWORD=$DB_PASS
-      - DB_NAME=$DB_NAME
-      - DB_PORT=$DB_PORT
-      - JWT_SECRET=$JWT_SECRET_KEY
-      - ACCESS_TOKEN_SECRET=$ACCESS_TOKEN_SECRET
+      - DB_USER=postgres
+      - DB_PASSWORD=admin
+      - DB_NAME=authdb
+      - DB_PORT=5432
+      - DB_DIALECT=postgres
+      - JWT_SECRET=kudaliar
+      - ACCESS_TOKEN_SECRET=kudaliar
     depends_on:
       - db
     command: npm start
